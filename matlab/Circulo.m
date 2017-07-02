@@ -1,6 +1,5 @@
 function a = ola()
     dientes = 0;
-
         while dientes<101
             if dientes<100
                 dientes=dientes+1;
