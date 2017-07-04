@@ -214,13 +214,13 @@ function main( )
             end
         else
             disp('Llego al Destino!!!')
-%             if(R1ON==1)
-%                 fclose(r1);
-%             end
-%             if(R2ON==1)
-%                 fclose(r2);
-%             end
-%             break;
+            if(R1ON==1)
+                fclose(r1);
+            end
+            if(R2ON==1)
+                fclose(r2);
+            end
+            break;
         end
     end
 end

@@ -1,4 +1,4 @@
-function [Phi,dientes,error] = controlFormacionExp( z1central, z1frontal, z2central, z2frontal, dientes )
+function [Phi,dientes,error] = controlFormacionExp( z1central, z1frontal, z2central, z2frontal, dientes, z1d, z2d)
 % %Control de formacion explicito
 % %Entrada: Posiciones frontales de los agentes(x,y)
 % %     if dientes<100
@@ -30,8 +30,8 @@ function [Phi,dientes,error] = controlFormacionExp( z1central, z1frontal, z2cent
     
     e=0.1;
 
-    z1d=[0;0.40];%Distancia de formacion deseada entre los dos agente.
-    z2d=[0;0];
+%     z1d=[0;0.40];%Distancia de formacion deseada entre los dos agente.
+%     z2d=[0;0];
     
     c12=z2d-z1d;
     c21=z1d-z2d;
@@ -180,11 +180,6 @@ function [Phi,dientes,error] = controlFormacionExp( z1central, z1frontal, z2cent
 %         
 %     end
 % end
-
-function Siguiente=circulo(r,dientes)
-    Siguiente(1)= r * cos(2 * pi * dientes / 100);
-    Siguiente(2)= r * sin(2 * pi * dientes / 100);
-end
 
 
 function [x,y] = derivTrayectoria()
