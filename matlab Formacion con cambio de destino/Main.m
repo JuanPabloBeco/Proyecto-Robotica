@@ -21,17 +21,18 @@ function main( )
     
     sprintf('Inicio')
 
-     %z1d=[0;0.40];%Distancia de formacion deseada entre los dos agente.
-     %z2d=[0;0];
+    %z1d=[0;0.40];%Distancia de formacion deseada entre los dos agente.
+    %z2d=[0;0];
      
-     try 
-            iteradorTrayectoria=iteradorTrayectoria+1;
-        catch
-            iteradorTrayectoria=0;
-        end
+    try 
+        iteradorTrayectoria=iteradorTrayectoria+1;
+    catch
+        iteradorTrayectoria=0;
+    end
 
-        z1d=circulo(RadioCirculo,0,0,iteradorTrayectoria);
-        z2d=[0;0]
+    z1d=circulo(RadioCirculo,0,0,iteradorTrayectoria);
+    %z1d=[0;0.4]
+    z2d=[0;0]
 
     while true
 
@@ -239,8 +240,7 @@ function main( )
             
             z1d=circulo(RadioCirculo,0,0,iteradorTrayectoria);
             z2d=[0;0]
-            
-            
+                        
 %             if(R1ON==1)
 %                 fclose(r1);
 %             end
@@ -248,6 +248,7 @@ function main( )
 %                 fclose(r2);
 %             end
 %             break;
+
         end
     end
 end

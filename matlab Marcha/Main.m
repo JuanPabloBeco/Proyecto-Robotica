@@ -2,6 +2,8 @@ function main( )
     
     R1ON=1
     R2ON=1
+    RadioCirculo=0.35;
+    toleranciaAlError=0.025;
     try
         if(R1ON==1)
         r1=Bluetooth('Robot1',1);
@@ -18,7 +20,20 @@ function main( )
     end
     
     sprintf('Inicio')
-    
+     
+    try 
+        iteradorTrayectoria=iteradorTrayectoria+1;
+    catch
+        iteradorTrayectoria=0;
+    end
+
+    trayectoriaNueva=circulo(RadioCirculo,0,0,iteradorTrayectoria);
+    derivTrayectoria=(trayectoriaNueva-trayectoria)/0.250;
+    trayectoria=trayectoriaNueva;
+
+    z1d=[0;0]
+    z2d=[0;0.3]
+
     while true
 
         try
@@ -74,7 +89,7 @@ function main( )
             catch
                 dientes=0;
             end
-            [omega,dientes,error] = controlFormacionExp( [x1C;y1C],[x1F;y1F],[x2C;y2C],[x2F;y2F], dientes);
+            [omega,dientes,error] = controlFormacionExp( [x1C;y1C],[x1F;y1F],[x2C;y2C],[x2F;y2F], dientes, trayectoria, derivTrayectoria);
         catch 
             sprintf('En el control')
         
@@ -121,14 +136,14 @@ function main( )
 %                 PWMr1(rueda)=pwmr1maxR1;
             elseif omegar1(rueda)>0
                 PWMr1(1)=0;
-                PWMr1(2)=abs(11.1*omegar1(rueda)+40);
+                PWMr1(2)=abs(8.3*omegar1(rueda)+50);
 %                 PWMr1(rueda)=11.1*omegar1(rueda)+40;
             elseif omegar1(rueda)<-wr1max
                 PWMr1(1)=abs(pwmr1maxR1Atras);
                 PWMr1(2)=0;
 %                 PWMr1(rueda)=-pwmr1max;
             elseif omegar1(rueda)<0;
-                PWMr1(1)=abs(12.5*omegar1(rueda)-35);
+                PWMr1(1)=abs(9.7*omegar1(rueda)-45);
                 PWMr1(2)=0;
 %                 PWMr1(rueda)=12.5*omegar1(rueda)-35;
             elseif omegar1(rueda)==0
@@ -142,7 +157,7 @@ function main( )
                 PWMr1(3)=pwmr1maxR2Adelante;
                 PWMr1(4)=0;
             elseif omegar1(rueda)>0
-                PWMr1(3)=11.1*omegar1(rueda)+40;
+                PWMr1(3)=8.3*omegar1(rueda)+49;
                 PWMr1(4)=0;
             elseif omegar1(rueda)==0
                 PWMr1(3)=0;
@@ -152,7 +167,7 @@ function main( )
                 PWMr1(4)=abs(pwmr1maxR2Atras);
             elseif omegar1(rueda)<0;
                 PWMr1(3)=0;
-                PWMr1(4)=abs(12.5*omegar1(rueda)-45);
+                PWMr1(4)=abs(9.7*omegar1(rueda)-55);
             end
 
         pwmr2max=145;
@@ -182,7 +197,7 @@ function main( )
         
         error=abs(error)
         
-        if error(1)>0.01 || error(2)>0.01 || error(2)>0.01 || error(3)>0.01
+        if error(1)>toleranciaAlError || error(2)>toleranciaAlError || error(2)>toleranciaAlError || error(3)>toleranciaAlError
 
             try
                 Msg='{"Motor1.1":"%0.3d", "Motor1.2":"%0.3d", "Motor2.1":"%0.3d","Motor2.2":"%0.3d","tiempo":"0250"}';
@@ -214,14 +229,31 @@ function main( )
             end
         else
             disp('Llego al Destino!!!')
-            if(R1ON==1)
-                fclose(r1);
-            end
-            if(R2ON==1)
-                fclose(r2);
-            end
-            break;
+            %z1d=input('Siguiente punto del robot 1 en la formacion ')
+            %z2d=input('Siguiente punto del robot 2 en la formacion ')
+            
+%             try 
+%                 iteradorTrayectoria=iteradorTrayectoria+1;
+%             catch
+%                 iteradorTrayectoria=0;
+%             end
+%             
+%             z1d=circulo(RadioCirculo,0,0,iteradorTrayectoria);
+%             z2d=[0;0]
+                        
+%             if(R1ON==1)
+%                 fclose(r1);
+%             end
+%             if(R2ON==1)
+%                 fclose(r2);
+%             end
+%             break;
+
         end
     end
 end
 
+function Siguiente=circulo(r,x,y,dientes)
+    Siguiente(1,1)= x + r * cos(2 * pi * dientes / 100);
+    Siguiente(2,1)= y + r * sin(2 * pi * dientes / 100);
+end
