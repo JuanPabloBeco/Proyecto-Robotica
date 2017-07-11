@@ -3,17 +3,11 @@ Proyecto Final de Robotica
 
 Diseño e Implementacion de un Sistema Multiagente
 
-Juan Pablo Becoña
-Diego Toledo
-Sofía Pereira
-Diego Medina
+Juan Pablo Becoña, Diego Toledo, Sofía Pereira y Diego Medina
 
 
 Profesores
-
-Enrique Ferreira 
-
-Jose Job Flores
+Enrique Ferreira y Jose Job Flores
 
 
 Universidad Católica del Uruguay
